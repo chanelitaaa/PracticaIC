@@ -1,0 +1,26 @@
+name: Alerta CI Hola Mundo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notificar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Ejecutar programa Hola Mundo
+        run: |
+          node index.js
+
+      - name: Enviar notificación a ntfy
+        run: |
+          curl -X POST \
+          -H "Title: Push a main" \
+          -H "Tags: rocket,ci" \
+          -d "Se ha subido código a la rama main del repositorio" \
+          https://ntfy.sh/devops-itla
